@@ -1,6 +1,8 @@
 package com.comeon.assignment;
 
+import com.comeon.assignment.persistence.GameDao;
 import com.comeon.assignment.persistence.PlayerDao;
+import com.comeon.assignment.representations.Game;
 import com.comeon.assignment.representations.Player;
 import com.comeon.assignment.resources.GameTrackingResource;
 
@@ -21,7 +23,7 @@ public class GameLoveApplicationV2 extends Application<DatabaseConfiguration>
         new GameLoveApplicationV2().run(args);
     }
 
-    private final HibernateBundle<DatabaseConfiguration> hibernate = new HibernateBundle<DatabaseConfiguration>(Player.class) {
+    private final HibernateBundle<DatabaseConfiguration> hibernate = new HibernateBundle<DatabaseConfiguration>(Player.class, Game.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(DatabaseConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -42,6 +44,7 @@ public class GameLoveApplicationV2 extends Application<DatabaseConfiguration>
     @Override
     public void run(DatabaseConfiguration databaseConfiguration, Environment environment) throws Exception {
         PlayerDao playerDao = new PlayerDao(hibernate.getSessionFactory());
-        environment.jersey().register(new GameTrackingResource(playerDao));
+        GameDao gameDao = new GameDao(hibernate.getSessionFactory());
+        environment.jersey().register(new GameTrackingResource(playerDao, gameDao));
     }
 }

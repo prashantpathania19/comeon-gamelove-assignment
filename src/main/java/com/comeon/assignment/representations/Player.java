@@ -6,22 +6,18 @@ package com.comeon.assignment.representations;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class represents a Player
  */
 @Entity
 @Table(name = "Player")
-@SequenceGenerator(name = "SEQ_SOME_TABLE", sequenceName = "SEQ_SOME_TABLE")
 public class Player {
     @Id
-    @GeneratedValue(generator = "SEQ_SOME_TABLE")
+    @GeneratedValue
     @Column(name="playerId")
     private Long id;
     @Column(name = "first_name")
@@ -35,10 +31,12 @@ public class Player {
         this.name = name;
     }
 
+    @JsonProperty
     public Long getId() {
         return id;
     }
 
+    @JsonProperty
     public String getName() {
         return name;
     }

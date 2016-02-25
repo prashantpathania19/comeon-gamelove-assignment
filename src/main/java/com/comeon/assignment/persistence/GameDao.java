@@ -4,20 +4,19 @@
 package com.comeon.assignment.persistence;
 
 import org.hibernate.SessionFactory;
-import com.comeon.assignment.representations.Player;
-
+import com.comeon.assignment.representations.Game;
 import io.dropwizard.hibernate.AbstractDAO;
 
 /**
- * DAO class for CRUD operations
+ * Game DAO class for CRUD operations
  */
-public class PlayerDao extends AbstractDAO<Player> {
+public class GameDao extends AbstractDAO<Game> {
     /**
      * Constructor.
      *
      * @param sessionFactory Hibernate session factory.
      */
-    public PlayerDao(SessionFactory sessionFactory) {
+    public GameDao(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
@@ -27,8 +26,9 @@ public class PlayerDao extends AbstractDAO<Player> {
      * @param gameName
      * @throws Exception
      */
-    public Player savePlayer(String playerName) throws Exception {
-        Player player = persist(new Player(playerName));
-        return player;
+    public Game saveGame(String gameName) throws Exception {
+        Game game = persist(new Game(gameName));
+        return game;
     }
 }
+

@@ -6,9 +6,10 @@ package com.comeon.assignment.representations;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class represents a Player
@@ -17,7 +18,8 @@ import javax.persistence.Table;
 @Table(name = "Game")
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @Column(name="gameId")
     private Long id;
     @Column(name = "game_name")
     private String name;
@@ -35,10 +37,12 @@ public class Game {
         this.name = name;
     }
 
+    @JsonProperty
     public Long getId() {
         return id;
     }
 
+    @JsonProperty
     public String getName() {
         return name;
     }
