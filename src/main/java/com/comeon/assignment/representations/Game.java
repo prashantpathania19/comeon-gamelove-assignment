@@ -3,12 +3,15 @@
  */
 package com.comeon.assignment.representations;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -16,9 +19,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Entity
 @Table(name = "Game")
-public class Game {
+@NamedQueries({
+    @NamedQuery(name = "game.findGameByName", query = "from Game game where game.name = :name")
+})
+public class Game implements Serializable {
+    private static final long serialVersionUID = 5916771721192214458L;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="gameId")
     private Long id;
     @Column(name = "game_name")
@@ -28,7 +35,6 @@ public class Game {
     }
 
     public Game(String name) {
-        this.name = name;
         this.name = name;
     }
 
