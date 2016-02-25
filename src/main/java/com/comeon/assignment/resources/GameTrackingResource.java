@@ -3,7 +3,9 @@
  */
 package com.comeon.assignment.resources;
 
+import java.util.List;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -14,6 +16,7 @@ import com.comeon.assignment.persistence.GameDao;
 import com.comeon.assignment.persistence.GameTrackingDao;
 import com.comeon.assignment.persistence.PlayerDao;
 import com.comeon.assignment.representations.Game;
+import com.comeon.assignment.representations.GameTracking;
 import com.comeon.assignment.representations.Player;
 import com.comeon.assignment.representations.ResponseString;
 
@@ -111,5 +114,18 @@ public class GameTrackingResource {
             return new ResponseString("Exception while executing saveGameTracking: " + exception.getMessage());
         }
         return responseString;
+    }
+
+    @GET
+    @Timed
+    @Path("/listTracking")
+    @UnitOfWork
+    public List<GameTracking> getTracking() {
+        try {
+            return gameTrackingDao.listTracking();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 }

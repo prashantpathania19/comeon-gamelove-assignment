@@ -5,10 +5,13 @@ package com.comeon.assignment.representations;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,58 +20,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Entity
 @Table(name = "GameTracking")
+@NamedQueries({
+    @NamedQuery(name = "tracking.listTracking", query = "from GameTracking")
+})
 public class GameTracking implements Serializable {
     private static final long serialVersionUID = 1057902020595934835L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id")
-    private Long id;
-    @Column(name = "gameId")
-    private Long gameId;
-
-    @Column(name = "playerId")
-    private Long playerId;
+    @EmbeddedId
+    private GameTrackingComposite gameTrackingComposite;
 
     public GameTracking() {
     }
 
-    public GameTracking(Long gameId, Long playerId) {
-        this.gameId = gameId;
-        this.playerId = playerId;
-    }
-
-    @JsonProperty
-    public Long getId() {
-        return id;
+    public GameTracking(GameTrackingComposite gameTrackingComposite) {
+        this.gameTrackingComposite = gameTrackingComposite;
     }
 
     /**
-     * @return the gameId
+     * @return the gameTrackingComposite
      */
     @JsonProperty
-    public Long getGameId() {
-        return gameId;
+    public GameTrackingComposite getGameTrackingComposite() {
+        return gameTrackingComposite;
     }
 
     /**
-     * @param gameId the gameId to set
+     * @param gameTrackingComposite the gameTrackingComposite to set
      */
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
+    public void setGameTrackingComposite(GameTrackingComposite gameTrackingComposite) {
+        this.gameTrackingComposite = gameTrackingComposite;
     }
 
-    /**
-     * @return the playerId
-     */
-    @JsonProperty
-    public Long getPlayerId() {
-        return playerId;
-    }
-
-    /**
-     * @param playerId the playerId to set
-     */
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
-    }
+    
 }

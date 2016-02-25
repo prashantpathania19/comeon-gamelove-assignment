@@ -3,9 +3,12 @@
  */
 package com.comeon.assignment.persistence;
 
-import io.dropwizard.hibernate.AbstractDAO;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import io.dropwizard.hibernate.AbstractDAO;
 import com.comeon.assignment.representations.GameTracking;
+import com.comeon.assignment.representations.GameTrackingComposite;
 
 /**
  * DAO class for CRUD operations
@@ -27,7 +30,20 @@ public class GameTrackingDao extends AbstractDAO<GameTracking> {
      * @throws Exception
      */
     public GameTracking saveGameTracking(Long gameId, Long playerId) throws Exception {
-        GameTracking gameTracking = persist(new GameTracking(gameId, playerId));
+        GameTrackingComposite gameTrackingComposite = new GameTrackingComposite(gameId, playerId);
+        GameTracking gameTracking = persist(new GameTracking(gameTrackingComposite));
         return gameTracking;
+    }
+
+    /**
+     * Method to list all tracking
+     * @return List<GameTracking>
+     * @throws Exception
+     */
+    public List<GameTracking> listTracking() throws Exception {
+        List<GameTracking> trackingList = null;
+        Query query = currentSession().getNamedQuery("tracking.listTracking");
+        trackingList = query.list();
+        return trackingList;
     }
 }

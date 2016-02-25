@@ -10,6 +10,7 @@ import com.comeon.assignment.persistence.GameTrackingDao;
 import com.comeon.assignment.persistence.PlayerDao;
 import com.comeon.assignment.representations.Game;
 import com.comeon.assignment.representations.GameTracking;
+import com.comeon.assignment.representations.GameTrackingComposite;
 import com.comeon.assignment.representations.Player;
 import com.comeon.assignment.resources.GameTrackingResource;
 
@@ -24,7 +25,7 @@ public class GameLoveApplicationV2 extends Application<DatabaseConfiguration>
         new GameLoveApplicationV2().run(args);
     }
 
-    private final HibernateBundle<DatabaseConfiguration> hibernate = new HibernateBundle<DatabaseConfiguration>(Player.class, Game.class, GameTracking.class) {
+    private final HibernateBundle<DatabaseConfiguration> hibernate = new HibernateBundle<DatabaseConfiguration>(Player.class, Game.class, GameTracking.class, GameTrackingComposite.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(DatabaseConfiguration configuration) {
             return configuration.getDataSourceFactory();
