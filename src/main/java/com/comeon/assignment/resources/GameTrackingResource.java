@@ -94,7 +94,7 @@ public class GameTrackingResource {
      * This method is a POST method that 
      * saves game tracking by saving game and
      * player object. It will save tracking of only
-     * saved games. please save game and player before
+     * saved games and players. please save game and player before
      * adding anything to the tracking table.
      * @param playerName - refers to player name
      * @param gameName - refers to game name
