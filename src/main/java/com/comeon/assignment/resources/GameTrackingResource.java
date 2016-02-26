@@ -51,7 +51,7 @@ public class GameTrackingResource {
     }
 
     /**
-     * This method save game entity
+     * This method is a POST method to save a game
      * @param gameName - name of the game
      * @return game object
      */
@@ -71,7 +71,7 @@ public class GameTrackingResource {
     }
 
     /**
-     * This method save player entity
+     * This method is a POST method to save a player
      * @param gameName - name of the player
      * @return player object
      */
@@ -91,8 +91,11 @@ public class GameTrackingResource {
     }
 
     /**
-     * This method saves game tracking by saving
-     * game and player
+     * This method is a POST method that 
+     * saves game tracking by saving game and
+     * player object. It will save tracking of only
+     * saved games. please save game and player before
+     * adding anything to the tracking table.
      * @param playerName - refers to player name
      * @param gameName - refers to game name
      * @return ResponseString - name of response string
@@ -120,7 +123,8 @@ public class GameTrackingResource {
     }
 
     /**
-     * Method to find all the GameTracking list
+     * This method is a GET method to
+     * see entries in GameTracking table
      * @return List<GameTracking> - represents a list of GameTracking detail
      */
     @GET
@@ -137,7 +141,9 @@ public class GameTrackingResource {
     }
 
     /**
-     * Method to find top games
+     * This method is a post method that return
+     * list of top games liked by players. If data
+     * does not exist then it will show blank list
      * @return - List<Games> representing list of Games
      */
     @GET
