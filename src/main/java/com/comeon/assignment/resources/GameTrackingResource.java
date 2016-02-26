@@ -27,7 +27,6 @@ import com.comeon.assignment.representations.TopGamesVO;
  * This class is an end point for saving GameTracking
  * related data
  * @author Prashant Pathania
- *
  */
 @Path("/love")
 @Produces(MediaType.APPLICATION_JSON)
