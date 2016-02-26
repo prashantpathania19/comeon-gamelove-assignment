@@ -4,9 +4,9 @@
 package com.comeon.assignment.representations;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * This class is a composite key for GameTracking
@@ -15,46 +15,46 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Embeddable
 public class GameTrackingComposite implements Serializable {
     private static final long serialVersionUID = -535636652376023945L;
-    @Column(name = "gameId")
-    private Long gameId;
+    @ManyToOne
+    @JoinColumn(name = "gameId")
+    private Game game;
 
-    @Column(name = "playerId")
-    private Long playerId;
+    @ManyToOne
+    @JoinColumn(name = "player")
+    private Player player;
 
     public GameTrackingComposite() {}
 
-    public GameTrackingComposite(Long gameId, Long playerId) {
-        this.gameId = gameId;
-        this.playerId = playerId;
+    public GameTrackingComposite(Game game, Player player) {
+        this.game = game;
+        this.player = player;
     }
 
     /**
-     * @return the gameId
+     * @return the game
      */
-    @JsonProperty
-    public Long getGameId() {
-        return gameId;
+    public Game getGame() {
+        return game;
     }
 
     /**
-     * @param gameId the gameId to set
+     * @param game the game to set
      */
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     /**
-     * @return the playerId
+     * @return the player
      */
-    @JsonProperty
-    public Long getPlayerId() {
-        return playerId;
+    public Player getPlayer() {
+        return player;
     }
 
     /**
-     * @param playerId the playerId to set
+     * @param player the player to set
      */
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

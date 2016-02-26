@@ -107,7 +107,7 @@ public class GameTrackingResource {
             if (player == null || game == null) {
                 responseString = new ResponseString("Invalid Game Name or Player Name");
             } else {
-                gameTrackingDao.saveGameTracking(game.getId(), player.getId());
+                gameTrackingDao.saveGameTracking(game, player);
                 responseString = new ResponseString("Data Saved: Game: " + game.getName() + ", Player: " + player.getName());
             }
         } catch (Exception exception) {
@@ -141,12 +141,8 @@ public class GameTrackingResource {
     @Timed
     @Path("/topGames")
     @UnitOfWork
-    public List<Game> getTopGames() {
-        List<Game> gameList = null;
-        List<Long> gameIdList = gameTrackingDao.getTopGames();
-        if (gameIdList != null && !gameIdList.isEmpty()) {
-            gameList = gameDao.getGameFromId(gameIdList);
-        }
-        return gameList;
+    public List<Object> getTopGames() {
+        List<Object> topGamesList = gameTrackingDao.getTopGames();
+        return topGamesList;
     }
 }

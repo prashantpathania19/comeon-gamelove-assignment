@@ -7,8 +7,10 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import io.dropwizard.hibernate.AbstractDAO;
+import com.comeon.assignment.representations.Game;
 import com.comeon.assignment.representations.GameTracking;
 import com.comeon.assignment.representations.GameTrackingComposite;
+import com.comeon.assignment.representations.Player;
 
 /**
  * DAO class for CRUD operations
@@ -30,8 +32,8 @@ public class GameTrackingDao extends AbstractDAO<GameTracking> {
      * @param gameName
      * @throws Exception
      */
-    public GameTracking saveGameTracking(Long gameId, Long playerId) throws Exception {
-        GameTrackingComposite gameTrackingComposite = new GameTrackingComposite(gameId, playerId);
+    public GameTracking saveGameTracking(Game game, Player player) throws Exception {
+        GameTrackingComposite gameTrackingComposite = new GameTrackingComposite(game, player);
         GameTracking gameTracking = persist(new GameTracking(gameTrackingComposite));
         return gameTracking;
     }
@@ -55,10 +57,10 @@ public class GameTrackingDao extends AbstractDAO<GameTracking> {
      * @return List<Long> representing list of long data
      */
     @SuppressWarnings("unchecked")
-    public List<Long> getTopGames() {
-        List<Long> longList = null;
+    public List<Object> getTopGames() {
+        List<Object> topGamesList = null;
         Query query = currentSession().getNamedQuery("tracking.listTopGames");
-        longList = (List<Long>)query.list();
-        return longList;
+        topGamesList = (List<Object>)query.list();
+        return topGamesList;
     }
 }
