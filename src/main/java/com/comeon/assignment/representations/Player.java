@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class represents a Player
+ * @author Prashant Pathania
  */
 @Entity
 @Table(name = "Player")

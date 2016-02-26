@@ -12,6 +12,7 @@ import com.comeon.assignment.representations.GameTrackingComposite;
 
 /**
  * DAO class for CRUD operations
+ * author Prashant Pathania
  */
 public class GameTrackingDao extends AbstractDAO<GameTracking> {
     /**
@@ -40,10 +41,24 @@ public class GameTrackingDao extends AbstractDAO<GameTracking> {
      * @return List<GameTracking>
      * @throws Exception
      */
+    @SuppressWarnings("unchecked")
     public List<GameTracking> listTracking() throws Exception {
         List<GameTracking> trackingList = null;
         Query query = currentSession().getNamedQuery("tracking.listTracking");
-        trackingList = query.list();
+        trackingList = (List<GameTracking>)query.list();
         return trackingList;
+    }
+
+    /**
+     * This method return top games from tracking
+     * table
+     * @return List<Long> representing list of long data
+     */
+    @SuppressWarnings("unchecked")
+    public List<Long> getTopGames() {
+        List<Long> longList = null;
+        Query query = currentSession().getNamedQuery("tracking.listTopGames");
+        longList = (List<Long>)query.list();
+        return longList;
     }
 }

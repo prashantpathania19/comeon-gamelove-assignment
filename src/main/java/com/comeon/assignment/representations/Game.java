@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "Game")
 @NamedQueries({
+    @NamedQuery(name = "game.findGameByIds", query = "from Game game where game.id IN (:ids)"),
     @NamedQuery(name = "game.findGameByName", query = "from Game game where game.name = :name")
 })
 public class Game implements Serializable {

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class is a composite key for GameTracking
+ * @author Prashant Pathania
  */
 @Embeddable
 public class GameTrackingComposite implements Serializable {

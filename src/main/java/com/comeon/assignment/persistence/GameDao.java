@@ -5,7 +5,6 @@ package com.comeon.assignment.persistence;
 
 import java.util.List;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import com.comeon.assignment.representations.Game;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -49,6 +48,20 @@ public class GameDao extends AbstractDAO<Game> {
             game = gameList.get(0);
         }
         return game;
+    }
+
+    /**
+     * This method return list of games from gameId
+     * @param gameIdList - a list of gameIds
+     * @return List<Game>
+     */
+    @SuppressWarnings("unchecked")
+    public List<Game> getGameFromId(List<Long> gameIdList) {
+        List<Game> gameList = null;
+        Query query = currentSession().getNamedQuery("game.findGameByIds");
+        query.setParameterList("ids", gameIdList);
+        gameList = (List<Game>)query.list();
+        return gameList;
     }
 }
 

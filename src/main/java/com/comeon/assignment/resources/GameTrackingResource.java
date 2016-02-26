@@ -26,7 +26,7 @@ import com.comeon.assignment.representations.ResponseString;
  * @author Prashant Pathania
  *
  */
-@Path("/player")
+@Path("/love")
 @Produces(MediaType.APPLICATION_JSON)
 public class GameTrackingResource {
     /**
@@ -116,6 +116,10 @@ public class GameTrackingResource {
         return responseString;
     }
 
+    /**
+     * Method to find all the GameTracking list
+     * @return List<GameTracking> - represents a list of GameTracking detail
+     */
     @GET
     @Timed
     @Path("/listTracking")
@@ -127,5 +131,22 @@ public class GameTrackingResource {
             exception.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Method to find top games
+     * @return - List<Games> representing list of Games
+     */
+    @GET
+    @Timed
+    @Path("/topGames")
+    @UnitOfWork
+    public List<Game> getTopGames() {
+        List<Game> gameList = null;
+        List<Long> gameIdList = gameTrackingDao.getTopGames();
+        if (gameIdList != null && !gameIdList.isEmpty()) {
+            gameList = gameDao.getGameFromId(gameIdList);
+        }
+        return gameList;
     }
 }

@@ -4,12 +4,8 @@
 package com.comeon.assignment.representations;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "GameTracking")
 @NamedQueries({
+    @NamedQuery(name = "tracking.listTopGames", query = "select count(1) as likes, gt.gameTrackingComposite.gameId from GameTracking gt group by gameId order by likes DESC"),
     @NamedQuery(name = "tracking.listTracking", query = "from GameTracking")
 })
 public class GameTracking implements Serializable {
