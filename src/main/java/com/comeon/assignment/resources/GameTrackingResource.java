@@ -3,6 +3,8 @@
  */
 package com.comeon.assignment.resources;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -19,6 +21,7 @@ import com.comeon.assignment.representations.Game;
 import com.comeon.assignment.representations.GameTracking;
 import com.comeon.assignment.representations.Player;
 import com.comeon.assignment.representations.ResponseString;
+import com.comeon.assignment.representations.TopGamesVO;
 
 /**
  * This class is an end point for saving GameTracking
@@ -37,9 +40,10 @@ public class GameTrackingResource {
     private GameTrackingDao gameTrackingDao;
 
     /**
-     * Constructor.
-     *
-     * @param game tracking DAO object to manipulate data.
+     * Constructor with parameter setting all DAO objects
+     * @param playerDao - refers to player DAO
+     * @param gameDao - refers to game DAO
+     * @param gameTrackingDao - refers to game tracking DAO
      */
     public GameTrackingResource(PlayerDao playerDao, GameDao gameDao, GameTrackingDao gameTrackingDao) {
         this.playerDao = playerDao;
@@ -141,8 +145,17 @@ public class GameTrackingResource {
     @Timed
     @Path("/topGames")
     @UnitOfWork
-    public List<Object> getTopGames() {
-        List<Object> topGamesList = gameTrackingDao.getTopGames();
+    public List<TopGamesVO> getTopGames() {
+        List<TopGamesVO> topGamesList = null;
+        List<Object> gamesList = gameTrackingDao.getTopGames();
+        if (gamesList != null && !gamesList.isEmpty()) {
+            topGamesList = new ArrayList<TopGamesVO>();
+            Iterator<Object> iterator = gamesList.iterator();
+            while(iterator.hasNext()) {
+                Object[] gamesListObj = (Object[]) iterator.next();
+                topGamesList.add(new TopGamesVO((Long)gamesListObj[0], (String)gamesListObj[2]));
+            }
+        }
         return topGamesList;
     }
 }
