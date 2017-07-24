@@ -13,6 +13,11 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <dropwizard.version>0.8.2</dropwizard.version>
+    <docker.registry.name></docker.registry.name><!-- leave empty for docker hub; use e.g. "localhost:5000/" for a local docker registry -->
+    <docker.repository.name>${docker.registry.name}prashant/${project.artifactId}</docker.repository.name>
+    <docker.host.address>localhost</docker.host.address><!-- this is not localhost when using boot2docker! -->
+    <prozu.port>8080</prozu.port>
+    <prozu.port.admin>8081</prozu.port.admin>
   </properties>
 
   <repositories>
@@ -65,8 +70,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.5.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -104,6 +109,56 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jolokia</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.13.3</version>
+        <configuration>
+          <images>
+            <image>
+              <alias>${project.artifactId}</alias>
+              <name>${docker.repository.name}:${project.version}</name>
+              <build>
+                <from>java:8-jre</from>
+                <maintainer>prashant</maintainer>
+                <assembly>
+                  <descriptor>docker-assembly.xml</descriptor>
+                </assembly>
+                <ports>
+                  <port>8080</port>
+                  <port>8081</port>
+                </ports>
+                <cmd>
+                  <shell>java -jar \
+                    /maven/${project.build.finalName}.jar server \
+                    /maven/config.yaml</shell>
+                </cmd>
+              </build>
+              <run>
+                <namingStrategy>alias</namingStrategy>
+                <ports>cle
+                  <port>${prozu.port}:8080</port>
+                  <port>${prozu.port.admin}:8081</port>
+                </ports>
+                <volumes>
+                  <bind>
+                    <volume>${user.home}/logs:/logs</volume>
+                  </bind>
+                </volumes>
+                <wait>
+                  <url>http://${docker.host.address}:${prozu.port.admin}/ping</url>
+                  <time>10000</time>
+                </wait>
+                <log>
+                  <prefix>${project.artifactId}</prefix>
+                  <color>cyan</color>
+                </log>
+              </run>
+            </image>
+          </images>
+        </configuration>
       </plugin>
     </plugins>
   </build>
